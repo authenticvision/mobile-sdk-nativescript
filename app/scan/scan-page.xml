@@ -1,0 +1,8 @@
+<Page navigatingTo="onNavigatingTo" xmlns="http://schemas.nativescript.org/tns.xsd">
+    <ActionBar>
+        <Label text="Authentic Vision SDK"/>
+    </ActionBar>
+    <StackLayout class="p-15">
+        <Label text="This sample project demonstrates integration of the Authentic Vision SDK with NativeScript. Not all SDK features are implemented. Please refer to the native AV SDK documentations and this template's readme file for details." textWrap="true"/>
+    </StackLayout>
+</Page>
