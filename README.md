@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="716" height="231" src="docs/authenticvision.png">
+    <img width="716" src="docs/authenticvision.png">
 </p>
 
 # Mobile SDK for NativeScript
