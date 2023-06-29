@@ -1,0 +1,6 @@
+!platforms/
+!typings/
+*.aar
+*.jar
+*.framework
+*.xcframework

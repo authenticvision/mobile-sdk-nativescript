@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "@authenticvision/mobile-sdk-nativescript",
+  "main": "index",
+  "typings": "index.common.ts",
+  "nativescript": {
+    "platforms": {
+      "android": "8.0.0",
+      "ios": "8.0.0"
+    }
+  }
+}

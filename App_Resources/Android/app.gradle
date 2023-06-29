@@ -1,3 +1,21 @@
+apply plugin: "kotlin-kapt" // for kapt line of AV SDK core 6 legacy dependencies
+
+dependencies {
+  // Authentic Vision Android SDK
+  // Omitting appcompat etc. from the SDK sample's build.gradle here because NativeScript ships with them anyway.
+  implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4"
+  implementation "com.google.android.material:material:1.6.1"
+  api "com.google.android.gms:play-services-location:19.0.1"
+
+  // Authentic Vision Android SDK with core 6 legacy dependencies
+  // These will eventually disappear, and can be omitted with "distauth" SDK builds already.
+  kapt "org.androidannotations:androidannotations:4.8.0"
+  annotationProcessor "org.androidannotations:androidannotations:4.8.0"
+  api "org.androidannotations:androidannotations-api:4.8.0"
+  api "com.squareup.okhttp3:okhttp:4.10.0"
+  api "org.bouncycastle:bcprov-jdk15on:1.70"
+}
+
 android {
   // compileSdkVersion 33
   // buildToolsVersion "33.0.0"

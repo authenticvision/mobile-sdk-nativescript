@@ -4,5 +4,42 @@
     </ActionBar>
     <StackLayout class="p-15">
         <Label text="This sample project demonstrates integration of the Authentic Vision SDK with NativeScript. Not all SDK features are implemented. Please refer to the native AV SDK documentations and this template's readme file for details." textWrap="true"/>
+        <StackLayout class="hr"/>
+        <Button text="Start Scan" tap="{{ startButtonTapped }}" class="-primary"/>
+
+        <StackLayout class="hr"/>
+
+        <Label text="Scan Result" class="h2"/>
+        <Label text="Results appear here after scanning the first label." textWrap="true" hidden="{{ result !== null }}"/>
+        <GridLayout rows="25, 25, 25, 25" columns="100, *" hidden="{{ result === null }}">
+            <Label text="SLID" row="0" col="0"/>
+            <Label text="{{ result.SLID }}" row="0" col="1"/>
+            <Label text="Session ID" row="1" col="0"/>
+            <Label text="{{ result.sessionID }}" row="1" col="1"/>
+            <Label text="Result" row="2" col="0"/>
+            <Label text="{{ authResult }}" row="2" col="1"/>
+            <Label text="Campaign" row="3" col="0"/>
+            <Label text="{{ result.campaignURL }}" row="3" col="1"/>
+        </GridLayout>
+
+        <StackLayout class="hr"/>
+
+        <Label text="Compatibility" class="h2"/>
+        <GridLayout rows="25, 25" columns="100, *">
+            <Label text="Device" row="0" col="0"/>
+            <Label text="{{ compatDevice }}" row="0" col="1"/>
+            <Label text="Attestation" row="1" col="0"/>
+            <Label text="{{ compatAttestation }}" row="1" col="1"/>
+        </GridLayout>
+ 
+        <StackLayout class="hr"/>
+
+        <Label text="Version Information" class="h2"/>
+        <GridLayout rows="25, 25" columns="100, *">
+            <Label text="AV SDK" row="0" col="0"/>
+            <Label text="{{ versions.sdkVersion + ' (' + versions.sdkGitHash.substring(0, 8) + ')' }}" row="0" col="1"/>
+            <Label text="AV Core" row="1" col="0"/>
+            <Label text="{{ versions.coreVersion + (versions.coreGitHash ? (' (' + versions.coreGitHash.substring(0, 8) + ')') : '') }}" row="1" col="1"/>
+        </GridLayout>
     </StackLayout>
 </Page>

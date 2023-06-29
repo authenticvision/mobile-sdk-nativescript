@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@authenticvision/mobile-sdk-nativescript": "file:plugins/authenticvision-mobile-sdk",
     "@nativescript/core": "^8.5.0",
     "@nativescript/theme": "^3.0.0"
   },
