@@ -33,7 +33,7 @@ https://github.com/authenticvision/mobile-sdk-nativescript/assets/597682/83564c7
 A full example is in [app/scan/scan-view-model.ts](app/scan/scan-view-model.ts#). Here is a minimal excerpt:
 ```ts
 import { Scanner } from '@authenticvision/mobile-sdk-nativescript'; // part of this repo
-let scanner = new Scanner({apiKey: "clientkey:abcdef..."})
+let scanner = new Scanner({apiKey: "clientkey:abcdef..."});
 let result = await scanner.scanOneLabel();
 if (result.authentic) {
     console.log("Authentic label scanned:", result.slid);
