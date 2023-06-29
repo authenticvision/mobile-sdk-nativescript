@@ -10,6 +10,22 @@ This may eventually become a ready-made NPM package, but we're not quite there y
 * AV Android SDK 8.2.2 or later
 * AV iOS SDK 8.0.1 or later
 
+## Example
+
+A full example is in [app/scan/scan-view-model.ts](app/scan/scan-view-model.ts#). Here is a minimal excerpt:
+```ts
+import { Scanner } from '@authenticvision/mobile-sdk-nativescript'; // part of this repo
+let scanner = new Scanner({apiKey: "clientkey:abcdef..."})
+let result = await scanner.scanOneLabel();
+if (result.authentic) {
+    console.log("Authentic label scanned:", result.slid);
+    // Access result's properties to get label details, e.g. result.campaignURL for its
+    // web content configuration. Let's talk if you need more properties here!
+} else {
+    console.log("Label scanned but authenticity not confirmed:", result.slid);
+}
+```
+
 ## Usage
 
 1. Add your AV API key `AVSDK_API_KEY=clientkey:abcdef...` to `.env`
