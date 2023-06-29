@@ -1,8 +1,26 @@
-# AV SDK NativeScript PoC
+<p align="center">
+    <img width="716" height="231" src="docs/authenticvision.png">
+</p>
+
+# Mobile SDK for NativeScript
 
 This is an early proof of concept implementation that demonstrates the integration of AV's mobile SDKs with NativeScript. It is feature-complete, but there are integration troubles to be addressed (see limitations/caveats section below).
 
 This may eventually become a ready-made NPM package, but we're not quite there yet. Until then this repository serves as template for wrapping our SDK without a ready-made plugin.
+
+**Expand these to see this project in action:**
+
+<details>
+<summary>Demo for iOS (short video)</summary>
+
+https://github.com/authenticvision/mobile-sdk-nativescript/assets/597682/20da3d26-058c-4e69-8d4e-11c7ac51b198
+</details>
+
+<details>
+<summary>Demo for Android (short video)</summary>
+
+https://github.com/authenticvision/mobile-sdk-nativescript/assets/597682/83564c71-8a1e-4ee1-b052-eda748d92ada
+</details>
 
 ## Requirements
 
