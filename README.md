@@ -61,7 +61,7 @@ if (result.authentic) {
 * The Android wrapper is a bit more involved:
     1. `App_Resources/Android/gradle.properties` enables Kotlin compilation
     2. `App_Resources/Android/src/kotlin/AuthenticVision.kt` implements a scan activity
-    3. `App_Resources/Android/AdnroidManifest.xml` exports the scan activity
+    3. `App_Resources/Android/AndroidManifest.xml` exports the scan activity
     4. `plugins/authenticvision-mobile-sdk/index.android.ts` can now spawn this activity
     5. Scan configuration and result data is passed through Android's Intent interface. Every scan config and result property must be listed in `ScanConfig` and explicitly copied in `AuthenticVision.kt`.
 * The frontend's `scan-view-model.ts` accesses the platform-agnostic interface in `index.common.ts`, which is implemented by either `index.android.ts` or `index.ios.ts`.
