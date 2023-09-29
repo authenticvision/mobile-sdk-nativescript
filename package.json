@@ -5,15 +5,15 @@
   "private": true,
   "dependencies": {
     "@authenticvision/mobile-sdk-nativescript": "file:plugins/authenticvision-mobile-sdk",
-    "@nativescript/core": "^8.5.0",
-    "@nativescript/theme": "^3.0.0"
+    "@nativescript/core": "^8.5",
+    "@nativescript/theme": "^3.0"
   },
   "devDependencies": {
-    "@nativescript/android": "^8.5.0",
-    "@nativescript/ios": "^8.5.0",
-    "@nativescript/types": "^8.5.0",
-    "@nativescript/webpack": "^5.0.0",
-    "nativescript": "^8.5.0",
-    "typescript": "^5.0.0"
+    "@nativescript/android": "^8.5",
+    "@nativescript/ios": "^8.5",
+    "@nativescript/types": "^8.5",
+    "@nativescript/webpack": "^5.0",
+    "nativescript": "^8.5",
+    "typescript": "^5.1"
   }
 }
