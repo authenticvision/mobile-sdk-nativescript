@@ -1,3 +1,3 @@
 #!/bin/sh
 set -eu
-sed -i.bak '/^$/d' 'typings/ios/objc!AuthenticVisionSDK.d.ts'
+sed -E -i.bak '/^$/d;s/^\};$/}/;/\tstatic (alloc|new)/d' 'typings/ios/objc!AuthenticVisionSDK.d.ts'
