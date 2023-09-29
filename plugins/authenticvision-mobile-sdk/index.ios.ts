@@ -205,6 +205,9 @@ class BrandingDelegate extends NSObject implements AVKBrandingDelegate {
         return this.#config.primaryColor?.ios;
       case "UniversalSecondary":
         return this.#config.secondaryColor?.ios;
+      case "BackgroundScanProgress":
+        // for classic and cheque card designs
+        return this.#config.primaryColor?.ios;
       default:
         return null;
     }
