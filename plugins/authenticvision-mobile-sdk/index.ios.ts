@@ -244,17 +244,11 @@ export class Scanner implements IScanner {
   constructor(params: ScanConfig) {
     this.#config = AVKScanConfig.defaultScanConfig().copy();
 
+    // The default endpoints are production endpoints.
     if (params.testingEnvironment) {
-      if (typeof AVKEndpointConfig !== "undefined") {
-        let endpointConfig = AVKEndpointConfig.endpointConfigFromPlistAtPath("testing-distauth");
-        endpointConfig.apiKey = params.apiKey;
-        this.#config.endpointConfig = endpointConfig;
-      } else {
-        throw new Error("Testing environment configuration is only available in debug builds of the Authentic Vision Mobile SDK.");
-      }
-    } else {
-        this.#config.apiKey = params.apiKey;
+      this.#config.endpoints = AVKScanConfig.endpointsTesting;
     }
+    this.#config.apiKey = params.apiKey;
 
     if (params.locale !== undefined) { this.#config.locale = params.locale; }
     if (params.design !== undefined) { this.#config.design = params.design as number; }

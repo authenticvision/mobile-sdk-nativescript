@@ -57,14 +57,6 @@ declare const enum AVKCoreCodeRawType {
 	QR = 1,
 	DM = 2
 }
-declare class AVKEndpointConfig extends NSObject implements NSCopying {
-	static endpointConfigFromPlistAtPath(path: string): AVKEndpointConfig;
-	static endpointConfigNamed(name: string): AVKEndpointConfig;
-	apiKey: string;
-	readonly isComplete: boolean;
-	name: string;
-	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
-}
 declare const enum AVKLabelLayout {
 	Generic = 0,
 	Horizontal = 1,
@@ -93,13 +85,16 @@ declare class AVKScanConfig extends NSObject implements NSCopying {
 	brandingBundle: NSBundle;
 	brandingDelegate: AVKBrandingDelegate;
 	design: AVKScanDesign;
-	endpointConfig: AVKEndpointConfig; // private
+	endpoints: NSArray<string>;
 	feedback: AVKScanFeedback;
+	fontFamily: string;
 	includeGeoLocationData: boolean;
 	labelLayout: AVKLabelLayout;
 	labelType: AVKLabelType;
 	locale: string;
 	showDebugViews: boolean;
+	static readonly endpointsProduction: NSArray<string>;
+	static readonly endpointsTesting: NSArray<string>;
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 	prepareToScan(): void;
 }
