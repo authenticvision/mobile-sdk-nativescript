@@ -57,7 +57,7 @@ if (result.authentic) {
 
 * An AV SDK wrapper is available at `plugins/`. It implements a custom scan only, where the AV SDK returns label details to the host application. The wrapper implementation dismisses the scan screen after a single label is scanned.
 * Wrappers are implemented separately for Android and iOS, but provide a common interface.
-* The iOS wrapper is pure TypeScript. It simply spawns the SDK's built-in controller with a bit of customization, and marshals the results back to JavaScript. The file `App_Resources/iOS/Info.plist` is extended with `NSAppTransportSecurity` required by AV libavcore 6.
+* The iOS wrapper is pure TypeScript. It simply spawns the SDK's built-in controller with a bit of customization, and marshals the results back to JavaScript.
 * The Android wrapper is a bit more involved:
     1. `App_Resources/Android/gradle.properties` enables Kotlin compilation
     2. `App_Resources/Android/src/kotlin/AuthenticVision.kt` implements a scan activity

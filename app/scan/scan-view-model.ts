@@ -27,7 +27,7 @@ const scanConfig: ScanConfig = {
 const versions = getVersionInfo();
 console.log("Using Authentic Vision Mobile SDK for", versions.platform);
 console.log("- AV SDK version:", versions.sdkVersion, versions.sdkGitHash);
-console.log("- AV libavcore version:", versions.coreVersion, versions.coreGitHash || "");
+console.log("- AV libavcore version:", versions.coreVersion, versions.coreGitHash);
 
 if (!scanConfig.apiKey) {
   console.log('ERROR: Please set AVSDK_API_KEY. See README.md for details. AV SDK scans will fail.');

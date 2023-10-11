@@ -39,7 +39,7 @@
             <Label text="AV SDK" row="0" col="0"/>
             <Label text="{{ versions.sdkVersion + ' (' + versions.sdkGitHash.substring(0, 8) + ')' }}" row="0" col="1"/>
             <Label text="AV Core" row="1" col="0"/>
-            <Label text="{{ versions.coreVersion + (versions.coreGitHash ? (' (' + versions.coreGitHash.substring(0, 8) + ')') : '') }}" row="1" col="1"/>
+            <Label text="{{ versions.coreVersion + ' (' + versions.coreGitHash.substring(0, 8) + ')' }}" row="1" col="1"/>
         </GridLayout>
     </StackLayout>
 </Page>

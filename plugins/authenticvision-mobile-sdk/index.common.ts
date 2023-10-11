@@ -86,7 +86,7 @@ export interface VersionInfo {
   sdkVersion: string
   sdkGitHash: string
   coreVersion: string
-  coreGitHash?: string
+  coreGitHash: string
 }
 
 export declare function getVersionInfo(): VersionInfo;

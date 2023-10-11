@@ -12,9 +12,6 @@ import {
   VersionInfo,
 } from './index.common';
 
-// There are tiny API differences for core 6 vs. 8 on Android, all of which reference the following variable.
-const isCoreV6 = com.authenticvision.android.sdk.integration.AvInfo.INSTANCE.coreVersion().startsWith("6.");
-
 export enum AttestationMode {
   None = "NONE",
   Managed = "MANAGED",
@@ -101,15 +98,7 @@ class ScanResult implements IScanResult {
     return this.#intent.getStringExtra("slid");
   }
   public get sessionID(): string {
-    let sessionID = this.#intent.getStringExtra("sessionID") || "";
-    if (isCoreV6 && sessionID.startsWith("ingress-session:")) {
-      // strip prefix added by core 6 proxy, purely cosmetic
-      let parts = sessionID.split(":");
-      if (parts.length === 3) {
-        sessionID = parts[2];
-      }
-    }
-    return sessionID;
+    return this.#intent.getStringExtra("sessionID") || "";
   }
   public get attestationToken(): string {
     return this.#intent.getStringExtra("attestationToken");
@@ -278,10 +267,8 @@ export function getVersionInfo(): VersionInfo {
     platform: "Android",
     sdkVersion: sdkInfo.version(),
     sdkGitHash: sdkInfo.gitHash(),
-    coreVersion: isCoreV6 ? sdkInfo.coreVersion().split(" ")[0] : sdkInfo.coreVersion(),
+    coreVersion: sdkInfo.coreVersion(),
+    coreGitHash: sdkInfo.coreGitHash(),
   };
-  if (!isCoreV6) {
-    versionInfo.coreGitHash = sdkInfo.coreGitHash();
-  }
   return versionInfo;
 }
