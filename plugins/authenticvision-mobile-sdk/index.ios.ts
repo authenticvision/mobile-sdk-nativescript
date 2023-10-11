@@ -254,6 +254,7 @@ export class Scanner implements IScanner {
     if (params.labelType !== undefined) { this.#config.labelType = params.labelType as number; }
     if (params.labelLayout !== undefined) { this.#config.labelLayout = params.labelLayout as number; }
     if (params.attestation !== undefined) { this.#config.attestationMode = params.attestation as number; }
+    if (params.attestationCert !== undefined) { this.#config.attestationCert = params.attestationCert; }
     if (params.geoLocation !== undefined) { this.#config.includeGeoLocationData = params.geoLocation; }
     if (params.debugOverlay !== undefined) { this.#config.showDebugViews = params.debugOverlay; }
 
