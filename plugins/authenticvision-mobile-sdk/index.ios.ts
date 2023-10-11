@@ -49,9 +49,8 @@ export enum CompatibilityLevel {
 
 export enum Design {
   GenericScanAssist = AVKScanDesign.GenericScanAssist,
-  Generic = AVKScanDesign.GenericManual,
+  GenericManual = AVKScanDesign.GenericManual,
   ChequeCard = AVKScanDesign.ChequeCard,
-  Classic = AVKScanDesign.Classic,
 }
 
 export enum LabelType {

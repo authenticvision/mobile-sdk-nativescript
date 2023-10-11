@@ -52,9 +52,8 @@ export enum CompatibilityLevel {
 
 export enum Design {
   GenericScanAssist = "GENERIC_WITH_SCAN_ASSISTANT",
-  Generic = "GENERIC",
+  GenericManual = "GENERIC",
   ChequeCard = "CHEQUE_CARD_BACK",
-  Classic = "_Classic", // not implemented, wontfix
 }
 
 export enum LabelType {
@@ -227,20 +226,6 @@ export class Scanner implements IScanner {
   }
 
   private configureIntent(intent: android.content.Intent): void {
-    // detect incompatible configurations while the Android SDK is being reworked for libavcore 8
-    if (isCoreV6) {
-      if (this.#config.design !== undefined && (this.#config.design as Design) !== Design.Classic) {
-        console.warn("AV SDK: The build of your SDK only supports the classic design.");
-      }
-      if (this.#config.attestation !== undefined && (this.#config.attestation as AttestationMode) !== AttestationMode.None) {
-        console.warn("AV SDK: The build of your SDK does not support attestation.");
-      }
-    } else {
-      if (this.#config.design !== undefined  && (this.#config.design as Design) === Design.Classic) {
-        console.warn("AV SDK: The classic design is not supported by your AV SDK build.");
-      }
-    }
-
     for (let key in this.#config) {
       if (this.#config.hasOwnProperty(key)) {
         // TypeScript wants the cases individually to select an overload, mhm

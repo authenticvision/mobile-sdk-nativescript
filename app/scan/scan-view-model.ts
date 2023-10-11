@@ -17,6 +17,7 @@ const scanConfig: ScanConfig = {
   apiKey: process?.env.AVSDK_API_KEY,
   feedback: {acoustic: false, haptic: true, visual: true},
   testingEnvironment: process?.env.AVSDK_USE_TESTING_ENVIRONMENT === "1", // private to Authentic Vision
+  design: Design.GenericScanAssist,
   branding: {
     primaryColor: new Color("#3C5AFD"), // NativeScript logo blue
     scanLogoImage: ImageSource.fromFileSync("~/scan/scan-logo-nativescript.png"),
@@ -30,14 +31,6 @@ console.log("- AV libavcore version:", versions.coreVersion, versions.coreGitHas
 
 if (!scanConfig.apiKey) {
   console.log('ERROR: Please set AVSDK_API_KEY. See README.md for details. AV SDK scans will fail.');
-}
-
-// The AV SDKs don't yet offer all designs in all builds.
-// Choose a consistent one while we're working on getting the new design to all platforms.
-if (versions.coreVersion.startsWith("6.")) {
-  scanConfig.design = Design.Classic;
-} else {
-  scanConfig.design = Design.GenericScanAssist;
 }
 
 export class ScanViewModel extends Observable {

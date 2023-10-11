@@ -7,7 +7,7 @@ export declare enum AuthResult { Authentic, Counterfeit, Standard2DCode, Unsuppo
 export declare enum CampaignAction { Undefined, Skip, Website, Video, SystemBrowser }
 export declare enum CodeRawType { Undefined, QR, DM }
 export declare enum CompatibilityLevel { Incompatible, Limited, Full }
-export declare enum Design { GenericScanAssist, Generic, ChequeCard, Classic }
+export declare enum Design { GenericScanAssist, GenericManual, ChequeCard }
 export declare enum LabelType { Generic, QTag, DTag, UTagGeneric, UTagQR, UTagDM }
 export declare enum LabelLayout { Generic, Horizontal, Vertical }
 export declare enum ResultAction { Undefined, Skip, Static, Website }
