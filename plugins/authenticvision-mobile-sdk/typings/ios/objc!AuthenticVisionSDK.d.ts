@@ -171,7 +171,5 @@ declare class AVKVersionInfo extends NSObject {
 	static sdkGitHash(): string;
 	static sdkVersion(): string;
 }
-declare var AuthenticVisionSDKVersionNumber: number;
-declare var AuthenticVisionSDKVersionString: interop.Reference<number>;
 declare var kAVKScanErrorComponentAVAS: string;
 declare var kAVKScanErrorComponentCore: string;
