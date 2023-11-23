@@ -54,15 +54,6 @@ export enum Design {
   ChequeCard = "CHEQUE_CARD_BACK",
 }
 
-export enum LabelType {
-  Generic = "GENERIC",
-  QTag = "Q_TAG",
-  DTag = "D_TAG",
-  UTagGeneric = "_UTagGeneric", // TODO: not implemented, only used by classic interface though
-  UTagQR = "_UTagQR", // likewise
-  UTagDM = "_UTagDM", // likewise
-}
-
 export enum LabelLayout {
   Generic = "_Generic", // TODO: not implemented, discuss
   Horizontal = "HORIZONTAL",

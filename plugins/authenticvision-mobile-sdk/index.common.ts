@@ -8,7 +8,6 @@ export declare enum CampaignAction { Undefined, Skip, Website, Video, SystemBrow
 export declare enum CodeRawType { Undefined, QR, DM }
 export declare enum CompatibilityLevel { Incompatible, Limited, Full }
 export declare enum Design { GenericScanAssist, GenericManual, ChequeCard }
-export declare enum LabelType { Generic, QTag, DTag, UTagGeneric, UTagQR, UTagDM }
 export declare enum LabelLayout { Generic, Horizontal, Vertical }
 export declare enum ResultAction { Undefined, Skip, Static, Website }
 
@@ -42,7 +41,6 @@ export interface ScanConfig {
   locale?: string; // RFC 5646, e.g. de-AT, defaults to app/system locale
   design?: Design;
   feedback?: {acoustic: boolean, haptic: boolean, visual: boolean};
-  labelType?: LabelType;
   labelLayout?: LabelLayout;
   attestation?: AttestationMode;
   attestationCert?: string;

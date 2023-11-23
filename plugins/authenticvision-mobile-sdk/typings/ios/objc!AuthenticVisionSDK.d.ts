@@ -62,14 +62,6 @@ declare const enum AVKLabelLayout {
 	Horizontal = 1,
 	Vertical = 2
 }
-declare const enum AVKLabelType {
-	Generic = 0,
-	QTag = 1,
-	DTag = 2,
-	UTagGeneric = 3,
-	UTagQR = 4,
-	UTagDM = 5
-}
 declare const enum AVKScanCampaignAction {
 	Undefined = 0,
 	Skip = 1,
@@ -90,7 +82,6 @@ declare class AVKScanConfig extends NSObject implements NSCopying {
 	fontFamily: string;
 	includeGeoLocationData: boolean;
 	labelLayout: AVKLabelLayout;
-	labelType: AVKLabelType;
 	locale: string;
 	showDebugViews: boolean;
 	static readonly endpointsProduction: NSArray<string>;

@@ -31,7 +31,6 @@ class ScanConfig(private val intent: Intent) : AvScanConfig() {
 
     override fun scanDesign() = intent.configEnum("scanDesign") ?: super.scanDesign()
     override fun labelLayout() = intent.configEnum("labelLayout") ?: super.labelLayout()
-    override fun labelType() = intent.configEnum("labelType") ?: super.labelType()
 
     override fun attestationMode() = intent.configEnum("attestationMode") ?: AvAttestationMode.NONE
     override fun attestationCert() = intent.getStringExtra("attestationCertificate")

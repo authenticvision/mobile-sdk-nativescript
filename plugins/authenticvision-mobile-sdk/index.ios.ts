@@ -54,15 +54,6 @@ export enum Design {
   ChequeCard = AVKScanDesign.ChequeCard,
 }
 
-export enum LabelType {
-  Generic = AVKLabelType.Generic,
-  QTag = AVKLabelType.QTag,
-  DTag = AVKLabelType.DTag,
-  UTagGeneric = AVKLabelType.UTagGeneric,
-  UTagQR = AVKLabelType.UTagQR,
-  UTagDM = AVKLabelType.UTagDM,
-}
-
 export enum LabelLayout {
   Generic = AVKLabelLayout.Generic,
   Horizontal = AVKLabelLayout.Horizontal,
@@ -252,7 +243,6 @@ export class Scanner implements IScanner {
 
     if (params.locale !== undefined) { this.#config.locale = params.locale; }
     if (params.design !== undefined) { this.#config.design = params.design as number; }
-    if (params.labelType !== undefined) { this.#config.labelType = params.labelType as number; }
     if (params.labelLayout !== undefined) { this.#config.labelLayout = params.labelLayout as number; }
     if (params.attestation !== undefined) { this.#config.attestationMode = params.attestation as number; }
     if (params.attestationCert !== undefined) { this.#config.attestationCert = params.attestationCert; }
