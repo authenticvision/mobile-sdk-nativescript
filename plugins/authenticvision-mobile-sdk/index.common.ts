@@ -70,7 +70,6 @@ export interface ScanResult {
 
 export interface Compatibility {
   level?: CompatibilityLevel; // not set on Android if camera permissions are not yet granted
-  attestationSupported?: boolean;
 }
 
 export declare class Scanner {

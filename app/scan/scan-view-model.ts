@@ -68,10 +68,6 @@ export class ScanViewModel extends Observable {
     }
   }
 
-  get compatAttestation(): string {
-    return this.#scanner.compatibility.attestationSupported ? "Supported" : "Not Supported";
-  }
-
   get versions(): VersionInfo {
     return versions;
   }

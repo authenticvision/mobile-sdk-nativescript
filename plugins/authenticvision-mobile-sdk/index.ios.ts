@@ -289,7 +289,6 @@ export class Scanner implements IScanner {
   public get compatibility(): Compatibility {
     return {
       level: AVKCompatibility.compatibilityLevelForConfig(this.#config) as number,
-      attestationSupported: AVKCompatibility.isAttestationSupportedForConfig(this.#config),
     }
   }
 }

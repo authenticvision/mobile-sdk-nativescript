@@ -183,10 +183,6 @@ export class Scanner implements IScanner {
     // Computation is somewhat expensive, so cache results. They won't change once available.
     let compatibility: Compatibility = this.#compatibility || (this.#compatibility = {});
 
-    if (compatibility.attestationSupported === undefined) {
-      compatibility.attestationSupported = native.isAttestationSupported(context, scanConfig);
-    }
-
     if (compatibility.level === undefined) {
       if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
         if (context.checkSelfPermission(android.Manifest.permission.CAMERA) === android.content.pm.PackageManager.PERMISSION_GRANTED) {

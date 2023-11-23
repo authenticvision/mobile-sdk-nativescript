@@ -22,12 +22,10 @@
 
         <StackLayout class="hr"/>
 
-        <Label text="Compatibility" class="h2"/>
-        <GridLayout rows="25, 25" columns="100, *">
-            <Label text="Device" row="0" col="0"/>
+        <Label text="Device Information" class="h2"/>
+        <GridLayout rows="25" columns="100, *">
+            <Label text="Compatibility" row="0" col="0"/>
             <Label text="{{ compatDevice }}" row="0" col="1"/>
-            <Label text="Attestation" row="1" col="0"/>
-            <Label text="{{ compatAttestation }}" row="1" col="1"/>
         </GridLayout>
 
         <StackLayout class="hr"/>

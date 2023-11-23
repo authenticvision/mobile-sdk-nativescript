@@ -34,8 +34,6 @@ declare var AVKCampaignScanFlowDelegate: {
 }
 declare class AVKCompatibility extends NSObject {
 	static compatibilityLevelForConfig(config: AVKScanConfig): AVKCompatibilityLevel;
-	static isAttestationSupported(): boolean;
-	static isAttestationSupportedForConfig(config: AVKScanConfig): boolean;
 	static isDeviceCompatible(): boolean;
 }
 declare const enum AVKCompatibilityLevel {
