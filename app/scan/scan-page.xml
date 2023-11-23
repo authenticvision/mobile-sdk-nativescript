@@ -11,15 +11,13 @@
 
         <Label text="Scan Result" class="h2"/>
         <Label text="Results appear here after scanning the first label." textWrap="true" hidden="{{ result !== null }}"/>
-        <GridLayout rows="25, 25, 25, 25" columns="100, *" hidden="{{ result === null }}">
-            <Label text="SLID" row="0" col="0"/>
-            <Label text="{{ result.SLID }}" row="0" col="1"/>
-            <Label text="Session ID" row="1" col="0"/>
-            <Label text="{{ result.sessionID }}" row="1" col="1"/>
-            <Label text="Result" row="2" col="0"/>
-            <Label text="{{ authResult }}" row="2" col="1"/>
-            <Label text="Campaign" row="3" col="0"/>
-            <Label text="{{ result.campaignURL }}" row="3" col="1"/>
+        <GridLayout rows="25, 25, 25, 25, 25, 25" columns="100, *" hidden="{{ result === null }}">
+            <Label text="Session ID" row="0" col="0"/><Label text="{{ result.sessionID }}" row="0" col="1"/>
+            <Label text="SLID" row="1" col="0"/><Label text="{{ result.SLID }}" row="1" col="1"/>
+            <Label text="Code Type" row="2" col="0"/><Label text="{{ result.codeRawType }}" row="2" col="1"/>
+            <Label text="Code Text" row="3" col="0"/><Label text="{{ result.codeRawText }}" row="3" col="1"/>
+            <Label text="Result" row="4" col="0"/><Label text="{{ authResult }}" row="4" col="1"/>
+            <Label text="Campaign" row="5" col="0"/><Label text="{{ result.campaignURL }}" row="5" col="1"/>
         </GridLayout>
 
         <StackLayout class="hr"/>
@@ -31,7 +29,7 @@
             <Label text="Attestation" row="1" col="0"/>
             <Label text="{{ compatAttestation }}" row="1" col="1"/>
         </GridLayout>
- 
+
         <StackLayout class="hr"/>
 
         <Label text="Version Information" class="h2"/>
