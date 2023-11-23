@@ -3,7 +3,7 @@
 import { Color, ImageSource } from '@nativescript/core';
 
 export declare enum AttestationMode { None, Managed, CMS }
-export declare enum AuthResult { Authentic, Counterfeit, Standard2DCode, UnsupportedLabel, Timeout }
+export declare enum AuthResult { Authentic, Counterfeit, Standard2DCode, UnsupportedLabel, Timeout, Other }
 export declare enum CampaignAction { Undefined, Skip, Website, Video, SystemBrowser }
 export declare enum CodeRawType { Undefined, QR, DM }
 export declare enum CompatibilityLevel { Incompatible, Limited, Full }

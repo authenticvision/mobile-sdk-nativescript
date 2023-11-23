@@ -25,6 +25,7 @@ export enum AuthResult {
   Standard2DCode = AVKCoreAuthenticationResult.Standard2DCode,
   UnsupportedLabel = AVKCoreAuthenticationResult.UnsupportedLabel,
   Timeout = AVKCoreAuthenticationResult.Timeout,
+  Other = AVKCoreAuthenticationResult.Other,
 }
 
 export enum CampaignAction {

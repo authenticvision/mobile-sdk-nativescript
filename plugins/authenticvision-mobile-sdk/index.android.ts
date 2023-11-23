@@ -24,6 +24,7 @@ export enum AuthResult {
   Standard2DCode = "STANDARD_2D_CODE",
   UnsupportedLabel = "UNSUPPORTED_LABEL",
   Timeout = "TIME_OUT",
+  Other = "OTHER",
   // "ERROR" and "CANCELED" cannot appear in results
 }
 
