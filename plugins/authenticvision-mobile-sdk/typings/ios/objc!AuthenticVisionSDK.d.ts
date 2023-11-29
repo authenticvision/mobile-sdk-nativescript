@@ -104,7 +104,6 @@ declare const enum AVKScanError {
 }
 declare var AVKScanErrorComponentKey: string;
 declare var AVKScanErrorDomain: string;
-declare var AVKScanErrorServerMessageKey: string;
 declare const enum AVKScanFeedback {
 	Visual = 1,
 	Acoustic = 2,
@@ -151,10 +150,8 @@ declare var AVKScanViewControllerDelegate: {
 	prototype: AVKScanViewControllerDelegate;
 }
 declare class AVKVersionInfo extends NSObject {
-	static coreBuildHost(): string;
 	static coreBuildInformation(): string;
 	static coreGitHash(): string;
-	static coreThirdPartyLicenses(): string;
 	static coreVersion(): string;
 	static sdkBuildNum(): string;
 	static sdkGitHash(): string;
