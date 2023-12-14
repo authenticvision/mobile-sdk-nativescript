@@ -4,7 +4,7 @@
 
 # Mobile SDK for NativeScript
 
-This is an early proof of concept implementation that demonstrates the integration of AV's mobile SDKs with NativeScript. It is feature-complete, but there are integration troubles to be addressed (see limitations/caveats section below).
+This is a feature-complete plugin that demonstrates the integration of AV's mobile SDKs with NativeScript.
 
 This may eventually become a ready-made NPM package, but we're not quite there yet. Until then this repository serves as template for wrapping our SDK without a ready-made plugin.
 
@@ -61,7 +61,7 @@ if (result.authentic) {
 * The Android wrapper is likewise pure TypeScript using Android's Intents API for starting the scan and retrieving its results. `App_Resources/Android/AndroidManifest.xml` adds optional permissions.
 * The frontend's `scan-view-model.ts` accesses the platform-agnostic interface in `index.common.ts`, which is implemented by either `index.android.ts` or `index.ios.ts`.
 
-## Limitations and Caveats
+## Caveats
 
-* "Custom scan" mode only, this won't display websites after a scan has completed. Applications that integrate the AV SDK tend to handle this by themselves anyway.
+* Only the "custom scan" mode is implemented. This plugin won't display websites after a scan has completed. Applications that integrate the AV SDK tend to handle this by themselves anyway.
 * The AV SDK will request permission from the OS as fallback here, but for user flow and error handling it is usually better to do it within your application.
