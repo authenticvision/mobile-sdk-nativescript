@@ -18,7 +18,6 @@ declare var AVKBrandingDelegate: {
 declare class AVKCampaignScanFlow extends NSObject implements AVKScanViewControllerDelegate {
 	appStoreURL: NSURL;
 	delegate: AVKCampaignScanFlowDelegate;
-	isAuthenticResultAutoContinueEnabled: boolean;
 	scanViewControllerReadyToScan(controller: AVKScanViewController): void;
 	scanViewControllerScanDidCompleteWithResult(controller: AVKScanViewController, result: AVKScanResult): void;
 	scanViewControllerScanWillCompleteWithResult(controller: AVKScanViewController, result: AVKScanResult): void;
@@ -42,13 +41,13 @@ declare const enum AVKCompatibilityLevel {
 	Full = 2
 }
 declare const enum AVKCoreAuthenticationResult {
+	Other = 0,
 	Authentic = 1,
 	Counterfeit = 2,
 	ContradictingEvidence = 3,
 	Standard2DCode = 4,
 	UnsupportedLabel = 5,
-	Timeout = 6,
-	Other = 7
+	Timeout = 6
 }
 declare const enum AVKCoreCodeRawType {
 	Undefined = 0,
@@ -90,8 +89,7 @@ declare class AVKScanConfig extends NSObject implements NSCopying {
 declare const enum AVKScanDesign {
 	GenericScanAssist = 0,
 	GenericManual = 1,
-	ChequeCard = 2,
-	Classic = 3
+	ChequeCard = 2
 }
 declare const enum AVKScanError {
 	Unknown = 0,
@@ -102,7 +100,6 @@ declare const enum AVKScanError {
 	InvalidAPIKey = 5,
 	PolicyViolation = 6
 }
-declare var AVKScanErrorComponentKey: string;
 declare var AVKScanErrorDomain: string;
 declare const enum AVKScanFeedback {
 	Visual = 1,
@@ -135,6 +132,7 @@ declare class AVKScanViewController extends UIViewController {
 	config: AVKScanConfig;
 	delegate: AVKScanViewControllerDelegate;
 	leadingItemView: UIStackView;
+	addCloseButtonWithTargetAction(target: any, action: string): void;
 	restartScanSession(): void;
 	startScanSession(): void;
 	stopScanSession(): void;
@@ -150,6 +148,8 @@ declare var AVKScanViewControllerDelegate: {
 	prototype: AVKScanViewControllerDelegate;
 }
 declare class AVKVersionInfo extends NSObject {
+	static avasClientGitHash(): string;
+	static avasClientVersion(): string;
 	static coreBuildInformation(): string;
 	static coreGitHash(): string;
 	static coreVersion(): string;
@@ -157,5 +157,3 @@ declare class AVKVersionInfo extends NSObject {
 	static sdkGitHash(): string;
 	static sdkVersion(): string;
 }
-declare var kAVKScanErrorComponentAVAS: string;
-declare var kAVKScanErrorComponentCore: string;

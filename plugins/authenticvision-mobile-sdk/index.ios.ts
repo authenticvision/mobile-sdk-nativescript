@@ -215,16 +215,6 @@ class BrandingDelegate extends NSObject implements AVKBrandingDelegate {
   }
 }
 
-function closeButton(controller: AVKScanViewController, target: NSObject, selector: string): UIButton {
-  let btn = UIButton.buttonWithType(UIButtonType.Custom);
-  btn.frame = controller.leadingItemView.bounds;
-  btn.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
-  btn.tintColor = UIColor.whiteColor;
-  btn.setImageForState(UIImage.systemImageNamed("xmark"), UIControlState.Normal);
-  btn.addTargetActionForControlEvents(target, selector, UIControlEvents.TouchDown);
-  return btn;
-}
-
 export class Scanner implements IScanner {
   #config: AVKScanConfig;
   #delegate: ScanDelegate|null = null;
@@ -268,15 +258,7 @@ export class Scanner implements IScanner {
       }
       this.#delegate = new ScanDelegate(resolve, reject); // store strong ref. until promise is resolved
       let controller = AVKScanViewController.scanViewControllerWithDelegateConfigError(this.#delegate, this.#config);
-      controller.loadViewIfNeeded();
-      controller.leadingItemView.addSubview(closeButton(controller, this.#delegate, ScanDelegate.CLOSE_SELECTOR));
-      if (UIDevice.currentDevice.userInterfaceIdiom === UIUserInterfaceIdiom.Pad) {
-        // A form sheet nets us a smaller modal on iPad, which increases the area covered by the bracket,
-        // and thus passes a larger part of each frame to libavcore. The iPad's CPU can handle this.
-        controller.modalPresentationStyle = UIModalPresentationStyle.FormSheet;
-      } else {
-        controller.modalPresentationStyle = UIModalPresentationStyle.FullScreen;
-      }
+      controller.addCloseButtonWithTargetAction(this.#delegate, ScanDelegate.CLOSE_SELECTOR);
       Utils.ios.getRootViewController().presentViewControllerAnimatedCompletion(controller, true, null as any);
     }).finally(() => {
       this.#delegate = null;

@@ -26,7 +26,7 @@ https://github.com/authenticvision/mobile-sdk-nativescript/assets/597682/83564c7
 
 * An Authentic Vision SDK API key and sample labels
 * AV Android SDK 8.3.0 or later
-* AV iOS SDK 8.1.0 or later
+* AV iOS SDK 8.2.0 or later
 
 ## Example
 
