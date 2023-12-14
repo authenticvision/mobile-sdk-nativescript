@@ -16,10 +16,8 @@ export declare enum ErrorCode {
   Config,
   Network,
   CameraUnavailable,
-  CameraPermissionDeniedOnce, // Android only, concept does not exist on iOS
-  CameraPermissionDeniedPermanently, // Android only (TODO: iOS)
   Outdated,
-  InvalidAPIKey, // SDKs with core 8 only, others return "Outdated" for invalid API keys
+  InvalidAPIKey,
   PolicyViolation,
 }
 
@@ -37,7 +35,7 @@ export interface BrandingConfig {
 }
 
 export interface ScanConfig {
-  apiKey: string
+  apiKey: string;
   locale?: string; // RFC 5646, e.g. de-AT, defaults to app/system locale
   design?: Design;
   feedback?: {acoustic: boolean, haptic: boolean, visual: boolean};
@@ -45,8 +43,8 @@ export interface ScanConfig {
   attestation?: AttestationMode;
   attestationCert?: string;
   geoLocation?: boolean;
-  debugOverlay?: boolean // iOS only
-  testingEnvironment?: boolean // private SDK builds only
+  debugOverlay?: boolean; // iOS only
+  testingEnvironment?: boolean;
   branding?: BrandingConfig;
 }
 
@@ -79,11 +77,11 @@ export declare class Scanner {
 }
 
 export interface VersionInfo {
-  platform: string
-  sdkVersion: string
-  sdkGitHash: string
-  coreVersion: string
-  coreGitHash: string
+  platform: string;
+  sdkVersion: string;
+  sdkGitHash: string;
+  coreVersion: string;
+  coreGitHash: string;
 }
 
 export declare function getVersionInfo(): VersionInfo;

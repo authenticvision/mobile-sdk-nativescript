@@ -47,11 +47,6 @@
 			</intent-filter>
 		</activity>
 
-		<activity
-			android:name="com.authenticvision.android.nativescript.ScanActivity"
-			android:configChanges="keyboardHidden|orientation"
-			android:screenOrientation="portrait"/>
-
 		<activity android:name="com.tns.ErrorReportActivity"/>
 	</application>
 </manifest>

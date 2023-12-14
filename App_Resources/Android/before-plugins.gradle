@@ -10,6 +10,5 @@ project.ext {
   // androidXTransition = "1.4.1"
   // androidXViewPager = "1.0.0"
 
-  // useKotlin = true
-  // kotlinVersion = "1.6.0"
+  kotlinVersion = "1.8.22"
 }

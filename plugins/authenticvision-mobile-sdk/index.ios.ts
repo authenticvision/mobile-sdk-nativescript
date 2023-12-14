@@ -72,8 +72,6 @@ export enum ErrorCode {
   Config = AVKScanError.Config,
   Network = AVKScanError.Network,
   CameraUnavailable = AVKScanError.CameraUnavailable,
-  CameraPermissionDeniedOnce = "_CameraPermissionDeniedOnce", // Android only
-  CameraPermissionDeniedPermanently = "_CameraPermissionDeniedPermanently", // Android only
   Outdated = AVKScanError.Outdated,
   InvalidAPIKey = AVKScanError.InvalidAPIKey,
   PolicyViolation = AVKScanError.PolicyViolation,
@@ -235,12 +233,7 @@ export class Scanner implements IScanner {
   constructor(params: ScanConfig) {
     this.#config = AVKScanConfig.defaultScanConfig().copy();
 
-    // The default endpoints are production endpoints.
-    if (params.testingEnvironment) {
-      this.#config.endpoints = AVKScanConfig.endpointsTesting;
-    }
     this.#config.apiKey = params.apiKey;
-
     if (params.locale !== undefined) { this.#config.locale = params.locale; }
     if (params.design !== undefined) { this.#config.design = params.design as number; }
     if (params.labelLayout !== undefined) { this.#config.labelLayout = params.labelLayout as number; }
@@ -260,6 +253,10 @@ export class Scanner implements IScanner {
     if (params.branding !== undefined) {
       this.#branding = new BrandingDelegate(params.branding); // store strong ref. for lifetime of scanner
       this.#config.brandingDelegate = this.#branding;
+    }
+
+    if (params.testingEnvironment) {
+      this.#config.endpoints = AVKScanConfig.endpointsTesting;
     }
   }
 

@@ -31,9 +31,9 @@ export enum AuthResult {
 export enum CampaignAction {
   Undefined = "UNDEFINED",
   Skip = "SKIP",
-  Website = "IN_APP_BROWSER",
-  Video = "_Video", // TODO: not exposed via API, Website is set with prefix instead (AVI-15777)
-  SystemBrowser = "_SystemBrowser", // TODO: likewise
+  Website = "WEBSITE",
+  Video = "VIDEO",
+  SystemBrowser = "SYSTEM_BROWSER",
 }
 
 export enum CodeRawType {
@@ -49,13 +49,13 @@ export enum CompatibilityLevel {
 }
 
 export enum Design {
-  GenericScanAssist = "GENERIC_WITH_SCAN_ASSISTANT",
-  GenericManual = "GENERIC",
-  ChequeCard = "CHEQUE_CARD_BACK",
+  GenericScanAssist = "GENERIC_SCAN_ASSIST",
+  GenericManual = "GENERIC_MANUAL",
+  ChequeCard = "CHEQUE_CARD",
 }
 
 export enum LabelLayout {
-  Generic = "_Generic", // TODO: not implemented, discuss
+  Generic = "GENERIC",
   Horizontal = "HORIZONTAL",
   Vertical = "VERTICAL",
 }
@@ -72,69 +72,70 @@ export enum ErrorCode {
   Config = "_Config", // not implemented nor needed, constructor throws instead
   Network = "_Network", // not implemented nor needed, scan activity reconnects forever
   CameraUnavailable = "CAMERA_UNAVAILABLE",
-  CameraPermissionDeniedOnce = "CAMERA_PERMISSION_DENIED_ONCE",
-  CameraPermissionDeniedPermanently = "CAMERA_PERMISSION_DENIED_PERMANENTLY",
   Outdated = "OUTDATED",
   InvalidAPIKey = "INVALID_API_KEY",
   PolicyViolation = "POLICY_VIOLATION",
 }
 
 class ScanResult implements IScanResult {
-  #intent: android.content.Intent;
+  #result: com.authenticvision.android.sdk.integration.AvScanResult;
 
   constructor(intent: android.content.Intent) {
-    this.#intent = intent;
+    let mapper = new com.authenticvision.android.sdk.integration.AvScanResultIntent(intent);
+    this.#result = mapper.mapFromIntent();
   }
 
   public get SLID(): string {
-    return this.#intent.getStringExtra("slid");
+    return this.#result?.getSlid() || "";
   }
   public get sessionID(): string {
-    return this.#intent.getStringExtra("sessionID") || "";
+    return this.#result?.getSessionId() || "";
   }
   public get attestationToken(): string {
-    return this.#intent.getStringExtra("attestationToken");
+    return this.#result?.getAttestationToken() || "";
   }
 
   public get authentic(): boolean {
-    return this.#intent.getBooleanExtra("authentic", false);
+    return this.#result.isAuthentic();
   }
   public get authResult(): AuthResult {
-    return this.#intent.getStringExtra("authResult") as AuthResult;
+    return this.#result.getAuthenticationResult().toString() as AuthResult;
   }
 
-  // TODO: code raw data is not implemented for core 8, and has a different interface for core 6 (AVI-15787)
   public get codeRawData(): ArrayBuffer|null {
-    return null;
+    let rawData = this.#result.getCodeRawData();
+    if (rawData) {
+      let result = new ArrayBuffer(rawData.length);
+      let resultView = new Uint8Array(result);
+      for (let i = 0; i < rawData.length; i++) {
+          resultView[i] = rawData[i];
+      }
+      return result;
+    } else {
+      return null;
+    }
   }
   public get codeRawText(): string {
-    return "";
+    return this.#result.getCodeRawText();
   }
   public get codeRawType(): CodeRawType {
-    return CodeRawType.Undefined;
+    return this.#result.getCodeRawType().toString() as CodeRawType;
   }
 
   public get resultAction(): ResultAction {
-    return this.#intent.getStringExtra("resultAction") as ResultAction;
+    return this.#result.getResultAction().toString() as ResultAction;
   }
   public get resultURL(): string {
-    if (this.resultAction === ResultAction.Website) {
-      return this.#intent.getStringExtra("resultURL");
-    } else {
-      return "";
-    }
+    return this.#result.getResultUrl();
   }
 
   public get campaignAction(): CampaignAction {
-    return this.#intent.getStringExtra("campaignAction") as CampaignAction;
+    return this.#result.getCampaignAction().toString() as CampaignAction;
   }
   public get campaignURL(): string {
-    return this.#intent.getStringExtra("campaignURL");
+    return this.#result.getCampaignUrl();
   }
 }
-
-// Scanner's activity com.authenticvision.android.nativescript.ScanActivity is implemented in
-// native code at App_Resources/Android/src/main/kotlin/AuthenticVisionSDK.kt.
 
 export class Scanner implements IScanner {
   #config: ScanConfig;
@@ -145,31 +146,39 @@ export class Scanner implements IScanner {
   }
 
   public scanOneLabel(): Promise<ScanResult> {
-    const requestCode = 1000; // value is arbitrary, only relevant when there are multiple activities
+    const requestCode = 100;
     return new Promise((resolve, reject) => {
       Application.android.on("activityResult", (args) => {
         if (args.requestCode === requestCode) {
           if (args.resultCode === android.app.Activity.RESULT_OK) {
             resolve(new ScanResult(args.intent));
           } else if (args.resultCode === android.app.Activity.RESULT_CANCELED) {
-            let cause: ErrorCause = {canceled: true};
-            reject(new Error("The scan was canceled by the user.", {cause}));
-          } else if (args.resultCode === android.app.Activity.RESULT_FIRST_USER) {
-            let cause: ErrorCause = {canceled: false, code: args.intent.getStringExtra("errorCode")};
-            let url = args.intent.getStringExtra("errorURL");
-            if (url) {
-              cause.url = url;
+            if (args.intent) {
+              let mapper = new com.authenticvision.android.sdk.integration.AvScanErrorResultIntent(args.intent);
+              let errorResult = mapper.mapFromIntent();
+              let cause: ErrorCause = {canceled: false, code: errorResult.getScanError().toString() as any};
+              let url = args.intent.getStringExtra("errorURL");
+              if (url) {
+                cause.url = url;
+              }
+              let message = errorResult.getMessage();
+              if (message) {
+                reject(new Error(`AV SDK error: ${message} (${cause.code})`, {cause}));
+              } else {
+                reject(new Error(`AV SDK error: ${cause.code}`, {cause}));
+              }
+            } else {
+              let cause: ErrorCause = {canceled: true};
+              reject(new Error("The scan was canceled by the user.", {cause}));
             }
-            reject(new Error("AV SDK error: " + cause.code, {cause}));
-            // TODO: Human readable text per error would be nice, like with NSError on iOS.
           } else {
-            reject(new Error("The scan returned with an unhandled activity result code."));
+            reject(new Error("The scan ended with an unhandled activity result code."));
           }
         }
       });
       let currentActivity = Application.android.foregroundActivity;
       let intent = new android.content.Intent(currentActivity,
-        com.authenticvision.android.nativescript.ScanActivity.class);
+        com.authenticvision.android.sdk.integration.AvScanActivity.class);
       this.configureIntent(intent);
       currentActivity.startActivityForResult(intent, requestCode);
     });
@@ -184,12 +193,12 @@ export class Scanner implements IScanner {
     let compatibility: Compatibility = this.#compatibility || (this.#compatibility = {});
 
     if (compatibility.level === undefined) {
+      let havePermission = true
       if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-        if (context.checkSelfPermission(android.Manifest.permission.CAMERA) === android.content.pm.PackageManager.PERMISSION_GRANTED) {
-          compatibility.level = String(native.isDeviceCompatible(context, this.scanConfig)) as any;
-        }
-      } else {
-        console.warn("AV SDK: Camera compatibility was not checked on Android older than 6.0 due to missing APIs.");
+        havePermission = (context.checkSelfPermission(android.Manifest.permission.CAMERA) === android.content.pm.PackageManager.PERMISSION_GRANTED);
+      }
+      if (havePermission) {
+        compatibility.level = String(native.isDeviceCompatible(context, this.scanConfig)) as any;
       }
     }
 
@@ -197,55 +206,70 @@ export class Scanner implements IScanner {
   }
 
   private get scanConfig() {
-    let intent = new android.content.Intent();
-    this.configureIntent(intent);
-    return new com.authenticvision.android.nativescript.ScanConfig(intent);
+    return this.configureIntent(new android.content.Intent());
   }
 
-  private configureIntent(intent: android.content.Intent): void {
-    for (let key in this.#config) {
-      if (this.#config.hasOwnProperty(key)) {
-        // TypeScript wants the cases individually to select an overload, mhm
-        let value = this.#config[key];
-        switch (typeof value) {
-          case "boolean":
-            intent.putExtra(key, value);
-            break;
-          case "number":
-            intent.putExtra(key, value);
-            break;
-          case "string":
-            intent.putExtra(key, value);
-            break;
-        }
-      }
+  private configureIntent(intent: android.content.Intent): com.authenticvision.android.sdk.integration.AvScanConfig {
+    let configIntent = new com.authenticvision.android.sdk.integration.AvScanConfigIntent(intent);
+
+    configIntent.setApiKey(this.#config.apiKey);
+
+    if (this.#config.locale !== undefined) {
+      configIntent.setLocale(new java.util.Locale(this.#config.locale));
+    }
+
+    if (this.#config.design !== undefined) {
+      let scanDesign = com.authenticvision.android.sdk.integration.AvScanConfig.AvScanDesign.valueOf(this.#config.design as any);
+      configIntent.setScanDesign(scanDesign);
     }
 
     if (this.#config.feedback !== undefined) {
       let feedback = this.#config.feedback;
-      if (feedback.acoustic) {
-        intent.putExtra("feedbackAcoustic", true);
-      }
-      if (feedback.haptic) {
-        intent.putExtra("feedbackHaptic", true);
-      }
-      if (feedback.visual) {
-        intent.putExtra("feedbackVisual", true);
-      }
+      configIntent.setIsAcousticFeedbackEnabled(!!feedback.acoustic);
+      configIntent.setIsHapticFeedbackEnabled(!!feedback.haptic);
+      configIntent.setIsVisualFeedbackEnabled(!!feedback.visual);
     }
 
-    if (this.#config.branding !== undefined) {
-      let branding = this.#config.branding;
-      if (branding.primaryColor) {
-        intent.putExtra("brandingPrimaryColor", branding.primaryColor.hex);
-      }
-      if (branding.secondaryColor) {
-        intent.putExtra("brandingSecondaryColor", branding.secondaryColor.hex);
-      }
-      if (branding.scanLogoImage) {
-        intent.putExtra("brandingScanLogoImage", branding.scanLogoImage.android);
-      }
+    if (this.#config.labelLayout !== undefined) {
+      let labelLayout = com.authenticvision.android.sdk.integration.AvScanConfig.AvLabelLayout.valueOf(this.#config.labelLayout as any);
+      configIntent.setLabelLayout(labelLayout);
     }
+
+    if (this.#config.attestation !== undefined) {
+      let attestationMode = com.authenticvision.android.sdk.integration.AvScanConfig.AvAttestationMode.valueOf(this.#config.attestation as any);
+      configIntent.setAttestationMode(attestationMode);
+    }
+
+    if (this.#config.attestationCert !== undefined) {
+      configIntent.setAttestationCert(this.#config.attestationCert);
+    }
+
+    if (this.#config.geoLocation !== undefined) {
+      configIntent.setIsGeoLocationEnabled(this.#config.geoLocation);
+    }
+
+    if (this.#config.debugOverlay !== undefined) {
+      // LATER: The AV Android SDK does not have a debug overlay
+    }
+
+    if (this.#config.testingEnvironment) {
+      configIntent.setEndpoints(com.authenticvision.android.sdk.integration.AvScanConfig.getENDPOINTS_TESTING());
+    }
+
+    configIntent.setIsCampaignFlowEnabled(false);
+
+    // It's possible to dump intent details for debugging:
+    // console.log("XXX bundle:", intent.getExtras().toString());
+
+    if (this.#config.branding !== undefined) {
+      let brandingIntent = new com.authenticvision.android.sdk.integration.AvBrandingIntent(intent);
+      let branding = this.#config.branding;
+      if (branding.primaryColor) { brandingIntent.setPrimaryColor(branding.primaryColor.android); }
+      if (branding.secondaryColor) { brandingIntent.setSecondaryColor(branding.secondaryColor.android); }
+      if (branding.scanLogoImage) { brandingIntent.setScanLogo(branding.scanLogoImage.android); }
+    }
+
+    return configIntent;
   }
 }
 

@@ -1,0 +1,14 @@
+dependencies {
+  // Authentic Vision Android SDK dependencies
+  implementation "androidx.activity:activity-compose:1.7.2"
+  implementation "androidx.appcompat:appcompat:1.6.1"
+  implementation "androidx.fragment:fragment-ktx:1.6.1"
+  api "com.google.android.gms:play-services-location:19.0.1"
+  api "org.jetbrains.kotlin:kotlin-reflect:1.8.22"
+}
+
+android {
+  buildFeatures {
+    viewBinding true // to pull in androix.databinding as dependency for AV SDK
+  }
+}
